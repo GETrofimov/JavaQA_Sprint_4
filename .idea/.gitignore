@@ -4,3 +4,7 @@
 .idea
 .gitignore
 /codeStyles
+/codeStyles/codeStyleConfig.xml
+/codeStyles/Project.xml
+misc.xml
+vcs.xml
