@@ -4,9 +4,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.practicum.yandex.constants.URLs;
 import ru.practicum.yandex.pageObject.HomePage;
 import ru.practicum.yandex.pageObject.OrderPage;
@@ -46,9 +49,8 @@ public class ScooterOrder {
         objOrderPage.setName("Григорий");
         objOrderPage.setLastName("Трофимов");
         objOrderPage.setAddress("Москва");
-        objOrderPage.setPhoneNumber("8-800-555-35-35");
+        objOrderPage.setPhoneNumber("88005553535");
         objOrderPage.selectMetroStation(12);
-
         objOrderPage.clickNextButton();
 
         objOrderPage.selectDay(28);

@@ -68,9 +68,9 @@ public class OrderPage {
 
     //Про аренду
     private By deliveryDate = By.className("Order_MixedDatePicker__3qiay");
-    private By rentPeriod = By.xpath("[@class='Dropdown-arrow-wrapper' and text()='* Срок аренды']");
+    private By rentPeriod = By.className("Dropdown-control");
     private By comment = By.cssSelector("[placeholder='Комментарий для курьера']");
-    private By orderButton = By.xpath("[@class='Button_Middle__1CSJM' and @placeholder='Заказать']");
+    private By orderButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать']");
     private By confirmationModal = By.className("Order_Modal__YZ-d3");
     private By confirmButton = By.xpath("[@class='Button_Middle__1CSJM' and text()='Да']");
     private By declineButton = By.xpath("[@class='Button_Middle__1CSJM' and text()='Нет']");
@@ -82,10 +82,11 @@ public class OrderPage {
 
     public void selectDay(int day) {
         driver.findElement(deliveryDate).click();
-        driver.findElement(By.xpath(String.format(".//div[@class='react-datepicker__day--0%d']", day)));
+        driver.findElement(By.xpath(String.format(".//div[text()='%d']", day))).click();
     }
     public void selectPeriod(int period) {
-        driver.findElement(By.xpath(String.format(".//div[@class='Dropdown-menu'/div[%d]", period)));
+        driver.findElement(rentPeriod).click();
+        driver.findElement(By.xpath(String.format(".//div[@class='Dropdown-menu']/div[%d]", period))).click();
     }
     public void submit() {
         driver.findElement(confirmButton).click();
