@@ -7,11 +7,12 @@ public class HomePage {
 
     private WebDriver driver;
 
+    private By upperOrderButton = By.xpath(".//button[@class='Button_Button__ra12g' and text()='Заказать']"); // Кнопка "Заказать"
+    private By statusButton = By.xpath(".//button[text()='Статус заказа']"); // Кнопка "Статус заказа"
     private By questionList = By.className("accordion");
     private By questionArea;
     private By answerArea;
-    private By orderButton = By.xpath(".//button[text()='Заказать']");
-    private By statusButton = By.xpath(".//button[text()='Статус заказа']");
+
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -30,6 +31,6 @@ public class HomePage {
     }
 
     public void clickOrderButton() {
-        driver.findElement(orderButton).click();
+        driver.findElement(upperOrderButton).click();
     }
 }
