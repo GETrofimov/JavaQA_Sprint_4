@@ -3,6 +3,8 @@ package ru.practicum.yandex.pageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OrderPage {
     private WebDriver driver;
@@ -63,6 +65,8 @@ public class OrderPage {
     }
     public void selectMetroStation(int dataValue) {
         driver.findElement(metroStation).click();
+        new WebDriverWait(driver, 1)
+                .until(ExpectedConditions.visibilityOfElementLocated(metroSelectOptionsList));
         selectMetroStationOption(dataValue);
     }
 
@@ -71,10 +75,11 @@ public class OrderPage {
     private By rentPeriod = By.className("Dropdown-control");
     private By comment = By.cssSelector("[placeholder='Комментарий для курьера']");
     private By orderButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать']");
-    private By confirmationModal = By.className("Order_Modal__YZ-d3");
-    private By confirmButton = By.xpath("[@class='Button_Middle__1CSJM' and text()='Да']");
-    private By declineButton = By.xpath("[@class='Button_Middle__1CSJM' and text()='Нет']");
+    private By confirmationModal = By.className("Order_ModalHeader__3FDaJ");
+    private By confirmButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Да']");
+    private By declineButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Нет']");
     private By datePicker = By.className("react-datepicker-popper");
+
 
     public WebElement getConfirmationModal() {
         return driver.findElement(confirmationModal);

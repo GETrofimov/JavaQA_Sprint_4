@@ -17,14 +17,15 @@ import ru.practicum.yandex.constants.GeckoWebDriverPath;
 import ru.practicum.yandex.constants.Questions;
 import ru.practicum.yandex.constants.URLs;
 import ru.practicum.yandex.pageObject.HomePage;
+import ru.practicum.yandex.pageObject.SharedElements;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class FAQSectionTests {
-    private final int order;
-    private final String answerText;
-    private final String questionText;
+    private int order;
+    private String answerText;
+    private String questionText;
     private WebDriver driver;
 
     public FAQSectionTests(String questionText, String answerText, int order) {
@@ -50,22 +51,26 @@ public class FAQSectionTests {
 
     @Before
 //Настройки для запуска в Firefox
-//    public void startBrowser() {
-//        System.setProperty("webdriver.gecko.driver", GeckoWebDriverPath.PATH);
-//        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-//        capabilities.setCapability("marionette", true);
-//        driver = new FirefoxDriver(capabilities);
-//        driver.get(URLs.MAIN);
-//
-//    }
+    public void startBrowser() {
+        System.setProperty("webdriver.gecko.driver", GeckoWebDriverPath.PATH);
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability("marionette", true);
+        driver = new FirefoxDriver(capabilities);
+        driver.get(URLs.MAIN);
+        SharedElements cookieBlock = new SharedElements(driver);
+        cookieBlock.clickCloseCookieButton();
+
+    }
 
 //Настройки для запуска в Chrome
-    public void startBrowser() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        driver.get(URLs.MAIN);
-    }
+//    public void startBrowser() {
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+//        driver = new ChromeDriver(options);
+//        driver.get(URLs.MAIN);
+//        SharedElements cookieBlock = new SharedElements(driver);
+//        cookieBlock.clickCloseCookieButton();
+//    }
 
     @Test
     public void checkQuestionTextAnswerTextAndSequence() {
@@ -78,7 +83,7 @@ public class FAQSectionTests {
         WebElement question = driver.findElement(faqSection.getQuestionArea(order));
         WebElement answer = driver.findElement(faqSection.getAnswerArea(order));
 
-        assertEquals(questionText, question.getText());
+        assertEquals("Wrong question text",questionText, question.getText());
         assertEquals(answerText, answer.getText());
         }
 
