@@ -1,11 +1,11 @@
-package ru.practicum.yandex.Tests;
+package tests;
 
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import ru.practicum.yandex.pageObject.HomePageHeader;
+import ru.practicum.yandex.pageObject.HomePage;
 import ru.practicum.yandex.pageObject.OrderPage;
 
 public class OrderPageFill {
@@ -18,7 +18,7 @@ public class OrderPageFill {
         driver = new ChromeDriver(options);
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
-        HomePageHeader objHomePage = new HomePageHeader(driver);
+        HomePage objHomePage = new HomePage(driver);
         objHomePage.clickOrderButton();
 
         OrderPage objOrderPage = new OrderPage(driver);
