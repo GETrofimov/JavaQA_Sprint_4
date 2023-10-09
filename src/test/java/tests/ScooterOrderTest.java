@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -51,32 +52,56 @@ public class ScooterOrderTest {
 
     @Before
 //Настройки для запуска в Firefox
-//    public void startBrowser() {
-//        System.setProperty("webdriver.gecko.driver", GeckoWebDriverPath.PATH);
-//        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-//        capabilities.setCapability("marionette", true);
-//        driver = new FirefoxDriver(capabilities);
-//        driver.get(URLs.MAIN);
-//        SharedElements cookieBlock = new SharedElements(driver);
-//        cookieBlock.clickCloseCookieButton();
-//
-//    }
-
-//Настройки для запуска в Chrome
     public void startBrowser() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments();
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.gecko.driver", GeckoWebDriverPath.PATH);
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability("marionette", true);
+        driver = new FirefoxDriver(capabilities);
         driver.get(URLs.MAIN);
         SharedElements cookieBlock = new SharedElements(driver);
         cookieBlock.clickCloseCookieButton();
+
     }
+
+//Настройки для запуска в Chrome
+//    public void startBrowser() {
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments();
+//        driver = new ChromeDriver(options);
+//        driver.get(URLs.MAIN);
+//        SharedElements cookieBlock = new SharedElements(driver);
+//        cookieBlock.clickCloseCookieButton();
+//    }
 
 
     @Test
-    public void CheckName() {
+    public void CheckUpperOrderScenario() {
         HomePage objHomePage = new HomePage(driver);
-        objHomePage.clickOrderButton();
+        objHomePage.clickUpperOrderButton();
+
+        OrderPage objOrderPage = new OrderPage(driver);
+        objOrderPage.setName(name);
+        objOrderPage.setLastName(lastName);
+        objOrderPage.setAddress(address);
+        objOrderPage.setPhoneNumber(phoneNumber);
+        objOrderPage.selectMetroStation(metroStation);
+        objOrderPage.clickNextButton();
+
+        objOrderPage.selectDay(day);
+        objOrderPage.selectPeriod(period);
+
+        objOrderPage.clickOrderButton();
+        objOrderPage.submit();
+
+        MatcherAssert.assertThat("Confirmation process was not finished", objOrderPage.getConfirmationModal().getText(), containsString("Заказ оформлен"));
+
+    }
+
+    @Test
+    public void CheckLowerOrderScenario() {
+        HomePage objHomePage = new HomePage(driver);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(objHomePage.getLowerOrderButton()));
+        driver.findElement(objHomePage.getLowerOrderButton()).click();
 
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.setName(name);
