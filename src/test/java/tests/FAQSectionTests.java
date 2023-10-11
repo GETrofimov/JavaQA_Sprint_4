@@ -1,0 +1,91 @@
+package tests;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import ru.practicum.yandex.constants.Answers;
+import ru.practicum.yandex.constants.GeckoWebDriverPath;
+import ru.practicum.yandex.constants.Questions;
+import ru.practicum.yandex.constants.URLs;
+import ru.practicum.yandex.object.page.HomePage;
+import ru.practicum.yandex.object.page.SharedElements;
+
+import static org.junit.Assert.assertEquals;
+
+@RunWith(Parameterized.class)
+public class FAQSectionTests {
+    private int order;
+    private String answerText;
+    private String questionText;
+    private WebDriver driver;
+
+    public FAQSectionTests(String questionText, String answerText, int order) {
+        this.questionText = questionText;
+        this.answerText = answerText;
+        this.order = order;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] getQuestions() {
+        return new Object[][] {
+                //Не стал выносить номер порядка в константы т.к. итак прозрачная переменная
+        {Questions.QUESTION_1, Answers.ANSWER_1, 0},
+        {Questions.QUESTION_2, Answers.ANSWER_2, 1},
+        {Questions.QUESTION_3, Answers.ANSWER_3, 2},
+        {Questions.QUESTION_4, Answers.ANSWER_4, 3},
+        {Questions.QUESTION_5, Answers.ANSWER_5, 4},
+        {Questions.QUESTION_6, Answers.ANSWER_6, 5},
+        {Questions.QUESTION_7, Answers.ANSWER_7, 6},
+        {Questions.QUESTION_8, Answers.ANSWER_8, 7}
+        };
+    }
+
+    @Before
+//Настройки для запуска в Firefox
+    public void startBrowser() {
+        System.setProperty("webdriver.gecko.driver", GeckoWebDriverPath.PATH);
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability("marionette", true);
+        driver = new FirefoxDriver(capabilities);
+        driver.get(URLs.MAIN);
+        SharedElements cookieBlock = new SharedElements(driver);
+        cookieBlock.clickCloseCookieButton();
+
+    }
+
+//Настройки для запуска в Chrome
+//    public void startBrowser() {
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+//        driver = new ChromeDriver(options);
+//        driver.get(URLs.MAIN);
+//        SharedElements cookieBlock = new SharedElements(driver);
+//        cookieBlock.clickCloseCookieButton();
+//    }
+
+    @Test
+    public void checkQuestionTextAnswerTextAndSequence() {
+        driver.get(URLs.MAIN);
+        HomePage faqSection = new HomePage(driver);
+
+        driver.findElement(faqSection.getQuestionArea(order)).click();
+        WebElement question = driver.findElement(faqSection.getQuestionArea(order));
+        WebElement answer = driver.findElement(faqSection.getAnswerArea(order));
+
+        assertEquals("Wrong question text",questionText, question.getText());
+        assertEquals(answerText, answer.getText());
+        }
+
+    @After
+    public void teardown() {
+        driver.quit();
+    }
+}
+
