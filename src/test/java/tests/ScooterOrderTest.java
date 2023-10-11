@@ -8,17 +8,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.practicum.yandex.constants.*;
-import ru.practicum.yandex.pageObject.HomePage;
-import ru.practicum.yandex.pageObject.OrderPage;
-import ru.practicum.yandex.pageObject.SharedElements;
+import ru.practicum.yandex.object.page.HomePage;
+import ru.practicum.yandex.object.page.OrderPage;
+import ru.practicum.yandex.object.page.SharedElements;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 public class ScooterOrderTest {
@@ -80,15 +77,10 @@ public class ScooterOrderTest {
         objHomePage.clickUpperOrderButton();
 
         OrderPage objOrderPage = new OrderPage(driver);
-        objOrderPage.setName(name);
-        objOrderPage.setLastName(lastName);
-        objOrderPage.setAddress(address);
-        objOrderPage.setPhoneNumber(phoneNumber);
-        objOrderPage.selectMetroStation(metroStation);
+        objOrderPage.fillOrderFields(name, lastName, address, phoneNumber, metroStation);
         objOrderPage.clickNextButton();
 
-        objOrderPage.selectDay(day);
-        objOrderPage.selectPeriod(period);
+        objOrderPage.fillRentFields(day, period);
 
         objOrderPage.clickOrderButton();
         objOrderPage.submit();
@@ -104,15 +96,10 @@ public class ScooterOrderTest {
         driver.findElement(objHomePage.getLowerOrderButton()).click();
 
         OrderPage objOrderPage = new OrderPage(driver);
-        objOrderPage.setName(name);
-        objOrderPage.setLastName(lastName);
-        objOrderPage.setAddress(address);
-        objOrderPage.setPhoneNumber(phoneNumber);
-        objOrderPage.selectMetroStation(metroStation);
+        objOrderPage.fillOrderFields(name, lastName, address, phoneNumber, metroStation);
         objOrderPage.clickNextButton();
 
-        objOrderPage.selectDay(day);
-        objOrderPage.selectPeriod(period);
+        objOrderPage.fillRentFields(day, period);
 
         objOrderPage.clickOrderButton();
         objOrderPage.submit();

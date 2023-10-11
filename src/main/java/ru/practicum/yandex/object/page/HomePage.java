@@ -1,6 +1,7 @@
-package ru.practicum.yandex.pageObject;
+package ru.practicum.yandex.object.page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -21,6 +22,8 @@ public class HomePage {
     }
 
     public By getQuestionList() {
+        HomePage faqSection = new HomePage(driver);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(faqSection.getQuestionList()));
         return questionList;
     }
 

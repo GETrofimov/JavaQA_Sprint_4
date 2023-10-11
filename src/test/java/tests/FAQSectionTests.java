@@ -8,16 +8,14 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.practicum.yandex.constants.Answers;
 import ru.practicum.yandex.constants.GeckoWebDriverPath;
 import ru.practicum.yandex.constants.Questions;
 import ru.practicum.yandex.constants.URLs;
-import ru.practicum.yandex.pageObject.HomePage;
-import ru.practicum.yandex.pageObject.SharedElements;
+import ru.practicum.yandex.object.page.HomePage;
+import ru.practicum.yandex.object.page.SharedElements;
 
 import static org.junit.Assert.assertEquals;
 
@@ -76,8 +74,6 @@ public class FAQSectionTests {
     public void checkQuestionTextAnswerTextAndSequence() {
         driver.get(URLs.MAIN);
         HomePage faqSection = new HomePage(driver);
-
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(faqSection.getQuestionList()));
 
         driver.findElement(faqSection.getQuestionArea(order)).click();
         WebElement question = driver.findElement(faqSection.getQuestionArea(order));

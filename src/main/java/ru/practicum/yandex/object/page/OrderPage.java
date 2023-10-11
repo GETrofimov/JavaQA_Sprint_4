@@ -1,4 +1,4 @@
-package ru.practicum.yandex.pageObject;
+package ru.practicum.yandex.object.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -58,6 +58,13 @@ public class OrderPage {
     private void selectMetroStationOption(int dataValue) {
         driver.findElement(By.xpath(String.format(".//li[@class='select-search__row' and @data-value='%d']", dataValue))).click();
     }
+    public void fillOrderFields(String name, String lastName, String address, String phoneNumber, int metroStation) {
+        setName(name);
+        setLastName(lastName);
+        setAddress(address);
+        setPhoneNumber(phoneNumber);
+        selectMetroStation(metroStation);
+    }
 
 
     public void clickNextButton() {
@@ -69,6 +76,8 @@ public class OrderPage {
                 .until(ExpectedConditions.visibilityOfElementLocated(metroSelectOptionsList));
         selectMetroStationOption(dataValue);
     }
+
+
 
     //Про аренду
     private By deliveryDate = By.className("Order_MixedDatePicker__3qiay");
@@ -93,6 +102,12 @@ public class OrderPage {
         driver.findElement(rentPeriod).click();
         driver.findElement(By.xpath(String.format(".//div[@class='Dropdown-menu']/div[%d]", period))).click();
     }
+    public void fillRentFields(int day, int period) {
+        selectDay(day);
+        selectPeriod(period);
+    }
+
+
     public void submit() {
         driver.findElement(confirmButton).click();
     }
